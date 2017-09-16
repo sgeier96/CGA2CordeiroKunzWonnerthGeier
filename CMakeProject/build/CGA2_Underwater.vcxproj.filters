@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\GameWindow.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\glerror.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\Input.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\OBJLoader.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\GLUtils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\GameObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\Scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\libs\glew-2.0.0\src\glew.c">
+      <Filter>lib_source_only</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\GameWindow.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\glerror.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\Input.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\libheaders.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\OBJLoader.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\framework\fw_config.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\GLUtils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\Game.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\GameObject.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\src\Scene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\libs\glew-2.0.0\include\GL\glew.h">
+      <Filter>lib_source_only</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Stefan Geier\CGA2CordeiroKunzWonnerthGeier\CMakeProject\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="framework">
+      <UniqueIdentifier>{FE6AF0CB-D28E-3849-A9B9-7000E5A7AE60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{C94A8858-49EF-3082-B38A-69C088F1AF58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib_source_only">
+      <UniqueIdentifier>{524EDD36-4DD4-320F-B888-73126E26901F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

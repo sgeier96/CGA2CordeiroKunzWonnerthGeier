@@ -1,0 +1,17 @@
+# CMake generation dependency list for this directory.
+C:/Users/Stefan Geier/CGA2CordeiroKunzWonnerthGeier/CMakeProject/libs/glfw-3.2.1/CMakeLists.txt
+D:/Programme/CMake/share/cmake-3.8/Modules/FindThreads.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/CheckLibraryExists.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/CheckSymbolExists.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/CheckIncludeFile.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/FindPackageHandleStandardArgs.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/FindPackageMessage.cmake
+C:/Users/Stefan Geier/CGA2CordeiroKunzWonnerthGeier/CMakeProject/libs/glfw-3.2.1/CMake/modules/FindVulkan.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/FindPackageHandleStandardArgs.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/FindPackageMessage.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/CMakePackageConfigHelpers.cmake
+D:/Programme/CMake/share/cmake-3.8/Modules/WriteBasicConfigVersionFile.cmake
+C:/Users/Stefan Geier/CGA2CordeiroKunzWonnerthGeier/CMakeProject/libs/glfw-3.2.1/src/glfw3Config.cmake.in
+D:/Programme/CMake/share/cmake-3.8/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+C:/Users/Stefan Geier/CGA2CordeiroKunzWonnerthGeier/CMakeProject/libs/glfw-3.2.1/src/glfw_config.h.in
+C:/Users/Stefan Geier/CGA2CordeiroKunzWonnerthGeier/CMakeProject/libs/glfw-3.2.1/src/glfw3.pc.in
