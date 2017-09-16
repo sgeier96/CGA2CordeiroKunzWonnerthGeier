@@ -105,13 +105,6 @@ void Game::onKey(Key key, Action action, Modifier modifier)
 //Mouse move events
 void Game::onMouseMove(MousePosition mouseposition)
 {
-	//if (mouseposition.oldX != mouseposition.X || mouseposition.oldY != mouseposition.Y) {
-		/*std::cout << "mouseposition.oldX: " << mouseposition.oldX << "\n";
-		std::cout << "mouseposition.X: " << mouseposition.X << "\n";
-		std::cout << "mouseposition.oldY: " << mouseposition.oldY << "\n";
-		std::cout << "mouseposition.Y: " << mouseposition.Y << "\n";
-		std::cout << "--------------------------------------------------------------------------------------" << "\n";
-		*/
 	if (firstMouse)
 	{
 		mouseposition.oldX = mouseposition.X;
@@ -124,7 +117,6 @@ void Game::onMouseMove(MousePosition mouseposition)
 		mouseposition.oldX = mouseposition.X;
 		mouseposition.oldY = mouseposition.Y;
 		myScene.passMouseMovement(mouseXOffset, mouseYOffset);
-	//}
 }
 
 //Mouse Button events

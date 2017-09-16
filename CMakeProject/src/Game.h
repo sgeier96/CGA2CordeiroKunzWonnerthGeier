@@ -47,8 +47,8 @@ private:
 	Scene myScene;
 	MousePosition myMousePosition;
 	bool firstMouse = true;
-	double mouseXOffset;
-	double mouseYOffset;
+	float mouseXOffset;
+	float mouseYOffset;
 
 	//Richtung des direktionalen Lichts
 	glm::vec3 lightDir;

@@ -1,31 +1,105 @@
 #include "Scene.h"
 
 
-
-
 void Scene::init() {
-	std::unique_ptr<GameObject> statue(new GameObject());
 
 #pragma region Asset loading
-	OBJResult res = OBJLoader::loadOBJ("../../assets/models/acropolis.obj");
-	for each (auto eachObject in res.objects)
-	{
-		for each (auto eachMesh in eachObject.meshes)
-		{
-			statue->objVAO.push_back(GLUtils::createVAO(eachMesh));
-		}
-	}
-	statue->objTexture = GLUtils::loadGLTexture("../../assets/textures/brickthingy.png");
+	assetManager.loadObject("../../assets/models/acropolis.obj");
+	assetManager.loadObject("../../assets/models/male_head.obj");
 
-	statue->shaderProgram = GLUtils::createShaderProgram("../../assets/shaders/simpleshader.vert", "../../assets/shaders/simpleshader.frag");
+	assetManager.loadTexture("../../assets/textures/brickthingy.png");
+	//assetManager.loadTexture("../../assets/textures/CliffJagged004_COL_VAR2_1K.png");
+	
+	assetManager.loadShaderProgram("../../assets/shaders/simpleshader.vert", "../../assets/shaders/simpleshader.frag");
 #pragma endregion
+	
+#pragma region texture assignment for each object
+	assetManager.objects[0]->objTexture = assetManager.textures[0]; //acropolis using brickthingy
+	assetManager.objects[1]->objTexture = assetManager.textures[0]; //head using brickthingy
+#pragma endregion
+
+#pragma region shaderProgramm assignment for each object
+	assetManager.objects[0]->shaderProgram = assetManager.shaderPrograms[0]; //acropolis using simpleshader.vert/.frag
+	assetManager.objects[1]->shaderProgram = assetManager.shaderPrograms[0]; //head using simpleshader.vert/.frag
+#pragma endregion
+
 
 	lightDir = glm::vec3(-1.0f, -1.0f, -1.0f);
 	lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	projmat = glm::perspective(glm::radians(90.0f), static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 100.0f);
 
 
-#pragma region Einstellungen und Hochladen von Texturen,  etc
+#pragma region Settings and uniform uploads
+	setSceneSettings();
+	GLint location;
+
+	//Das oben kompilierte Shader Programm wird in die Pipeline gehängt,
+	//(entspricht glUseProgram(program->prog);
+	assetManager.objects[0]->shaderProgram->use();
+	assetManager.objects[1]->shaderProgram->use();
+
+	//Uniforms für den Vertex Shader
+	location = glGetUniformLocation(assetManager.objects[0]->shaderProgram->prog, "proj_mat"); GLERR
+	glUniformMatrix4fv(location, 1, false, glm::value_ptr(projmat)); GLERR
+	//Uniforms für den Fragment Shader
+	location = glGetUniformLocation(assetManager.objects[0]->shaderProgram->prog, "lightDir"); GLERR
+	glm::vec4 lightDirInViewSpace(glm::normalize(viewmat * glm::vec4(lightDir, 0.0f)));
+	//Vec3 daraus konstruieren und in die Uniform Variable schreiben
+	glUniform3fv(location, 1, glm::value_ptr(glm::vec3(lightDirInViewSpace.x, lightDirInViewSpace.y, lightDirInViewSpace.z)));
+	//Lichtfarbe
+	location = glGetUniformLocation(assetManager.objects[0]->shaderProgram->prog, "light_color"); GLERR
+	glUniform3fv(location, 1, glm::value_ptr(lightColor)); GLERR
+
+	//Wir binden die Textur an die Texture Unit 0
+	assetManager.objects[0]->objTexture->bind(0);
+	setTexturePreferences();
+	assetManager.objects[0]->objTexture->unbind();
+	location = glGetUniformLocation(assetManager.objects[0]->shaderProgram->prog, "tex"); GLERR
+	glUniform1i(location, 0); GLERR
+
+	assetManager.objects[1]->objTexture->bind(1);
+	setTexturePreferences();
+	assetManager.objects[1]->objTexture->unbind();
+
+#pragma endregion
+}
+
+void Scene::render(double dtime) {
+	for (auto& o : assetManager.objects) {
+		o->render(dtime);
+	}
+
+	GLint location;
+	//View Matrix
+	viewmat = myCamera.updateViewmat();
+	for each(auto& eachObject in assetManager.objects) {
+		location = glGetUniformLocation(eachObject->shaderProgram->prog, "view_mat"); GLERR
+			glUniformMatrix4fv(location, 1, false, glm::value_ptr(viewmat)); GLERR
+	}
+	
+}
+
+void Scene::moveCamera(int moveDirection, GLdouble dtime) {
+	myCamera.move(moveDirection, dtime);
+}
+
+void Scene::passMouseMovement(float mouseXOffset, float mouseYOffset) {
+	myCamera.processMouseMovement(mouseXOffset, mouseYOffset);
+}
+
+void Scene::rotateObject(int indice, float angle, int axis, GLdouble dtime) {
+	assetManager.objects[indice]->rotate(angle, axis, dtime);
+}
+
+void Scene::translateObject(int indice, glm::vec3 transVec, GLdouble dtime) {
+	assetManager.objects[indice]->translate(transVec, dtime);
+}
+
+void Scene::scaleObject(int indice, glm::vec3 scaleVec, GLdouble dtime) {
+	assetManager.objects[indice]->scale(scaleVec, dtime);
+}
+
+void Scene::setSceneSettings() {
 	//Wir aktivieren Backface Culling
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -33,42 +107,9 @@ void Scene::init() {
 	//Und den Tiefentest
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+}
 
-	//Das oben kompilierte Shader Programm wird in die Pipeline gehängt,
-	//(entspricht glUseProgram(program->prog);
-	statue->shaderProgram->use();
-
-	//Wir setzen die Uniforms. Da sich die Daten in diesem einfachen Beispiel nicht ändern, können wir die Uniforms
-	//hier in init setzen, die Werte werden im Shader Programm gespeichert.
-
-	//Hilfsvariable für die Uniform Location
-	GLint location;
-
-	//Uniforms für den Vertex Shader
-
-
-		//Projektions Matrix
-		location = glGetUniformLocation(statue->shaderProgram->prog, "proj_mat"); GLERR
-		glUniformMatrix4fv(location, 1, false, glm::value_ptr(projmat)); GLERR
-
-
-
-		//Uniforms für den Fragment Shader
-
-		//Lichtrichtung
-		location = glGetUniformLocation(statue->shaderProgram->prog, "lightDir"); GLERR
-		//Lichtrichtung von Worldspace in Viewspace transformieren
-		glm::vec4 lightDirInViewSpace(glm::normalize(viewmat * glm::vec4(lightDir, 0.0f)));
-	//Vec3 daraus konstruieren und in die Uniform Variable schreiben
-	glUniform3fv(location, 1, glm::value_ptr(glm::vec3(lightDirInViewSpace.x, lightDirInViewSpace.y, lightDirInViewSpace.z)));
-
-	//Lichtfarbe
-	location = glGetUniformLocation(statue->shaderProgram->prog, "light_color"); GLERR
-		glUniform3fv(location, 1, glm::value_ptr(lightColor)); GLERR
-
-	//Wir binden die Textur an die Texture Unit 0
-		statue->objTexture->bind(0);
-
+void Scene::setTexturePreferences() {
 	//Wir setzen die Wrapmodes. (Was passiert wenn ich über die Textur hinaus sample?)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); GLERR
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); GLERR
@@ -89,56 +130,17 @@ void Scene::init() {
 
 																		  //Wir verbinden die Texture Unit, auf der unsere Textur liegt (0) mit dem Sampler im Shader.
 																		  //Dazu setzen wir die Uniform Variable einfach auf die Nummer der Texture Unit also 0.
-	statue->objTexture->unbind();
-
-	location = glGetUniformLocation(statue->shaderProgram->prog, "tex"); GLERR
-		glUniform1i(location, 0); GLERR
-#pragma endregion
-	objects.push_back(std::move(statue));
-	//objects.push_back(std::unique_ptr<GameObject>(new Plane()));
 }
 
-void Scene::render(double dtime) {
-	for (auto& o : objects) {
-		o->render(dtime);
-	}
-
-	GLint location;
-	//View Matrix
-	viewmat = myCamera.updateViewmat();
-	for each(auto& eachObject in objects) {
-		location = glGetUniformLocation(eachObject->shaderProgram->prog, "view_mat"); GLERR
-			glUniformMatrix4fv(location, 1, false, glm::value_ptr(viewmat)); GLERR
-	}
+void Scene::uploadUniform(GLuint shaderProgram, const GLchar* uniformName) {
 	
 }
 
 Scene::Scene(int windowX, int windowY) :
-windowWidth(windowX), windowHeight(windowY)
+	windowWidth(windowX), windowHeight(windowY)
 {
 }
 
 Scene::~Scene() {
 
 }
-
-void Scene::moveCamera(int moveDirection, GLdouble dtime) {
-	myCamera.move(moveDirection, dtime);
-}
-
-void Scene::passMouseMovement(float mouseXOffset, float mouseYOffset) {
-	myCamera.processMouseMovement(mouseXOffset, mouseYOffset);
-}
-
-void Scene::rotateObject(int indice, float angle, int axis, GLdouble dtime) {
-	objects[indice]->rotate(angle, axis, dtime);
-}
-
-void Scene::translateObject(int indice, glm::vec3 transVec, GLdouble dtime) {
-	objects[indice]->translate(transVec, dtime);
-}
-
-void Scene::scaleObject(int indice, glm::vec3 scaleVec, GLdouble dtime) {
-	objects[indice]->scale(scaleVec, dtime);
-}
-

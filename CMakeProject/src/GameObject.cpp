@@ -51,7 +51,6 @@ void GameObject::translate(glm::vec3 transVec, GLdouble dtime) {
 	modelmat =  glm::translate(modelmat, transVec * static_cast<GLfloat> (dtime));
 }
 
-
 void GameObject::scale(glm::vec3 scaleVec, GLdouble dtime) {
 	modelmat = glm::scale(modelmat, scaleVec * static_cast<GLfloat>(dtime));
 }

@@ -2,9 +2,10 @@
 #define _SCENE_H_
 
 #include <libheaders.h>
+#include <GameWindow.h>
+#include <AssetManager.h>
 #include "GameObject.h"
 #include "Camera.h"
-#include <GameWindow.h>
 #include <OBJLoader.h>
 #include "GLUtils.h"
 #include <list>
@@ -28,14 +29,19 @@ public:
 	void moveCamera(int moveDirection, GLdouble dtime);
 	void passMouseMovement(float mouseXOffset, float mouseYOffset);
 	
+	void setTexturePreferences();
+	void setSceneSettings();
+	void uploadUniform(GLuint shaderProgram, const GLchar* uniformName);
 
 private:
 	/*unique_ptr ist ein smart pointer der automatisch das objekt löscht wenn es out-of-scope geht.
 	damit werden die objekte automatisch "aufgeräumt" wenn die Scene Klasse zerstört wird.*/
-	std::vector<std::unique_ptr<GameObject>> objects;
+	//std::vector<std::unique_ptr<GameObject>> objects;
 
+	//GLint location;
 	int windowWidth, windowHeight;
 	Camera myCamera;
+	AssetManager assetManager;
 
 	//Richtung des direktionalen Lichts
 	glm::vec3 lightDir;
