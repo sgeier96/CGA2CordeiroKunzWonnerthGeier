@@ -26,9 +26,8 @@ Game::~Game()
 //Initialization here. (i.e. load a scene, load textures ...)
 void Game::init()
 {
-
 	myScene.init();
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.1f, 0.2f, 1.0f);
 }
 
 //cleanup. Free resources here.
@@ -51,17 +50,18 @@ void Game::update(GLdouble dtime)
 	if (input->getKeyState(Key::D) == KeyState::Pressed)
 		myScene.moveCamera(MOVE_RIGHT, dtime);
 #pragma endregion
-
+	myScene.update(dtime);
 
 #pragma region rotation commands
 	if (input->getKeyState(Key::Right) == KeyState::Pressed)
-		myScene.rotateObject(0, 0.5f, RIGHT, dtime);
+		myScene.rotateObject(1, 0.5f, RIGHT, dtime);
 	if (input->getKeyState(Key::Left) == KeyState::Pressed)
-		myScene.rotateObject(0, 0.5f, LEFT, dtime);
+		myScene.rotateObject(1, 0.5f, LEFT, dtime);
 	if (input->getKeyState(Key::Up) == KeyState::Pressed)
-		myScene.rotateObject(0, 0.5f, UP, dtime);
+		myScene.rotateObject(1, 0.5f, UP, dtime);
 	if (input->getKeyState(Key::Down) == KeyState::Pressed)
-		myScene.rotateObject(0, 0.5f, DOWN, dtime);
+		myScene.rotateObject(1, 0.5f, DOWN, dtime);
+	
 #pragma endregion
 #pragma region translation commands (CURRENTLY DEACTIVATED)
 /*	if (input->getKeyState(Key::W) == KeyState::Pressed)
@@ -91,7 +91,6 @@ void Game::render(GLdouble dtime)
 {
 	// Colorbuffer und Depthbuffer des Backbuffers clearen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	myScene.render(dtime);
 }
 

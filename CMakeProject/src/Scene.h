@@ -10,6 +10,8 @@
 #include "GLUtils.h"
 #include <list>
 #include <memory>
+#include <ppm.h>
+#include <PerlinNoise.h>
 
 
 /*ALS ERWEITERUNGSMÖGLICHKEIT KANN MAN IN EINER TEXTDATEI DIE PFADE ETC ANGEBEN */
@@ -22,6 +24,7 @@ public:
 
 	void init();
 	void render(double dtime);
+	void update(double dtime);
 	void rotateObject(int indice, float angle, int axis, GLdouble dtime);
 	void translateObject(int indice, glm::vec3 transVec, GLdouble dtime);
 	void scaleObject(int indice, glm::vec3 scaleVec, GLdouble dtime);
@@ -29,6 +32,7 @@ public:
 	void moveCamera(int moveDirection, GLdouble dtime);
 	void passMouseMovement(float mouseXOffset, float mouseYOffset);
 	
+	void initiatePerlinNoise(int seed);
 	void setTexturePreferences();
 	void setSceneSettings();
 	void uploadUniform(GLuint shaderProgram, const GLchar* uniformName);
@@ -38,7 +42,8 @@ private:
 	damit werden die objekte automatisch "aufgeräumt" wenn die Scene Klasse zerstört wird.*/
 	//std::vector<std::unique_ptr<GameObject>> objects;
 
-	//GLint location;
+	GLint location;
+	GLfloat u_time = 0.0f;
 	int windowWidth, windowHeight;
 	Camera myCamera;
 	AssetManager assetManager;

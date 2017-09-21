@@ -14,6 +14,7 @@ uniform mat4 proj_mat;
 uniform vec3 light_dir;
 
 
+
 //Daten fuer den Fragment Shader
 out struct VertexData
 {

@@ -3,6 +3,7 @@
 
 #include "GLUtils.h"
 #include <libheaders.h>
+#include <glerror.h>
 
 class GameObject
 {
@@ -11,9 +12,10 @@ public:
 	virtual~GameObject();
 
 	virtual void render(double dtime); 
-	/* "= 0 bewirkt, dass render in der Basisklasse keine Implementierung bekommt
-		d.h. Es können nur Objekte von Klassen erzeugt werden die von dieser Klasse erben
-		ist eine Funktion einer Klasse als = 0 deklariert nennt sich die Klasse "abstrakt"" */
+
+	int textureUnitCounter = 0;
+	glm::vec3 previousPos;
+	GLint location;
 
 
 	//.bindTextures kann hier eingefügt werden
@@ -24,14 +26,25 @@ public:
 	std::shared_ptr<ShaderProgram> shaderProgram;
 	//Die Textur der Objekte
 	std::shared_ptr<Texture2D> objTexture;
+	//Optional: Heightmap der Objekte
+	std::shared_ptr<Texture2D> heightmap;
 
 	//Transformationsmatrix für die Objekte
 	glm::mat4 modelmat;
-
+	void bindTexture(int textureUnit);
+	void unbindTexture();
+	void bindHeightmap(int textureUnit);
+	void unbindHeightmap(int textureUnit);
+	void setTexturePreferences();
 
 	void rotate(float, int, GLdouble);
 	void translate(glm::vec3, GLdouble);
 	void scale(glm::vec3, GLdouble);
+	glm::vec3 translateIntoCenter();
+
+	void initiatoryRotation(float angle, int axis);
+	void initiatoryTranslation(glm::vec3 transVec);
+	void initiatoryScaling(glm::vec3 scaleVec);
 };
 
 #endif
